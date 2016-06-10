@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Request: https://service/testobjects?offset=0&amp;limit=2 -->
+<etf:Response xmlns="http://www.interactive-instruments.de/etf/1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:etf="http://www.interactive-instruments.de/etf/1.0"
+    xsi:schemaLocation="http://www.interactive-instruments.de/etf/1.0 https://raw.githubusercontent.com/jonherrmann/etf-schema-prototype/master/src/main/resources/schema/service-response.xsd"
+    version="1.0">
+    <Pagination position="0" returnedItems="2">
+        <current href="https://service/testobjects?offset=0&amp;limit=2"/>
+    </Pagination>
+    <TestObjectCollection>
+        <TestObject id="IDa8e40755-a9bc-4e34-b859-999fb2eeccb4">
+            <label>Test Object 1 - cite2013 WFS</label>
+            <description>Description of Test Object 1</description>
+            <itemHash>ZGVmYXVsdA==</itemHash>
+            <version>1.0.1</version>
+            <author>Frank Drebin</author>
+            <creationDate>2016-05-04T18:13:51.0</creationDate>
+            <testObjectTypes>
+                <testObjectType xsi:type="etf:ExternalReference"
+                    href="https://localhost/testobjecttypes/ee92a614-a45c-4bc5-8dc8-43f0579ab771"
+                    title="WFS SERVICE"/>
+                <testObjectType xsi:type="etf:ExternalReference"
+                    href="https://localhost/testobjecttypes/91bbe224-588b-477f-824e-a5ba36b57557"
+                    title="INSPIRE SERVICE"/>
+            </testObjectTypes>
+            <ResourceCollection>
+                <resource
+                    href="http://services.interactive-instruments.de/cite2013wfs/simpledemo/cgi-bin/cities-postgresql/wfs?request=GetCapabilities&amp;service=wfs"
+                />
+            </ResourceCollection>
+        </TestObject>
+        <TestObject id="IDd54a6e8b-a87d-46f0-81a7-c9f49833b340">
+            <label>Test Object 2 - XML tile</label>
+            <description>Description of Test Object 2</description>
+            <itemHash>ZGVmYXVsdA==</itemHash>
+            <version>1.0.1</version>
+            <author>Jane Spencer</author>
+            <creationDate>2006-06-04T01:13:51.0</creationDate>
+            <lastEditor>Kevin Finnerty</lastEditor>
+            <lastUpdateDate>2014-05-04T18:11:51.0</lastUpdateDate>
+            <testObjectTypes>
+                <testObjectType xsi:type="etf:ExternalReference"
+                    href="https://localhost/testobjecttypes/d204552c-1f57-4086-82ed-fb68d739437e"
+                    title="XML FILES"/>
+            </testObjectTypes>
+            <ResourceCollection>
+                <resource href="file://tile_1223.xml"/>
+            </ResourceCollection>
+        </TestObject>
+    </TestObjectCollection>
+</etf:Response>

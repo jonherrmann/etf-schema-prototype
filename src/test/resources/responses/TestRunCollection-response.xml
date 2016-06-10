@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Request: https://localhost/testruns?offset=0&amp;limit=2 -->
+<etf:Response xmlns="http://www.interactive-instruments.de/etf/1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:etf="http://www.interactive-instruments.de/etf/1.0"
+    xsi:schemaLocation="http://www.interactive-instruments.de/etf/1.0 https://raw.githubusercontent.com/jonherrmann/etf-schema-prototype/master/src/main/resources/schema/service-response.xsd"
+    version="1.0">
+    <Pagination position="1" returnedItems="2">
+        <current href="https://localhost/testruns?offset=0&amp;limit=2"/>
+    </Pagination>
+    <TestRunCollection>
+        <TestRun id="IDd0ce8288-603d-40da-9e45-eef2c21b0995" status="FAILED">
+            <label>First finished test run</label>
+            <defaultLang>nl-NL</defaultLang>
+            <startTimestamp>2016-09-22T15:09:01</startTimestamp>
+            <testTaskResultsCollectionRef xsi:type="etf:ExternalReference" href="https://localhost/testtasks/439d274f-2751-4714-8962-8b580b4961bb"/>
+        </TestRun>
+        <TestRun id="ID4c948b87-7eb4-4b3a-a825-68e9649264b8">
+            <label>Second still running test run</label>
+            <defaultLang>nl-NL</defaultLang>
+            <startTimestamp>2016-09-22T15:15:30</startTimestamp>
+            <testTaskCollectionRef xsi:type="etf:ExternalReference" href="https://localhost/testtasks/406873fe-7e65-45e1-8822-e15056206d9c"/>
+            <testTaskResultsCollectionRef xsi:type="etf:ExternalReference" href="https://localhost/testtasks/c2ecbb4a-bb04-4327-bbc1-090a3e574e1d"/>
+        </TestRun>
+    </TestRunCollection>
+</etf:Response>

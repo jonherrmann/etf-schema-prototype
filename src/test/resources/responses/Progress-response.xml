@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Request: https://localhost/progress/d7889838-cf5c-4f24-b286-1d7cea62af05 -->
+<etf:Response xmlns="http://www.interactive-instruments.de/etf/1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:etf="http://www.interactive-instruments.de/etf/1.0"
+    xsi:schemaLocation="http://www.interactive-instruments.de/etf/1.0 https://raw.githubusercontent.com/jonherrmann/etf-schema-prototype/master/src/main/resources/schema/service-response.xsd"
+    version="1.0">
+    <Progress id="IDd7889838-cf5c-4f24-b286-1d7cea62af05">
+        <parent xsi:type="etf:ExternalReference"
+            href="https://localhost/testtask/406873fe-7e65-45e1-8822-e15056206d9c"/>
+        <ProgressEventLog>
+            <TMesg seq="1" ts="2016-09-22T15:15:31" v="1">Test started</TMesg>
+            <TStructDesc seq="2" ts="2016-09-22T15:15:32"
+                id="IDc4eb1852-fb86-45ab-9889-d93ec58986e2" lvl="1" prid="root">
+                <label>Label for ETS 3 - Simple Validation</label>
+                <desc>Description for ETS 3</desc>
+            </TStructDesc>
+            <TStructDesc seq="3" ts="2016-09-22T15:15:33"
+                id="ID12cb1449-ee1d-4787-b8f6-8a537759c0c5" lvl="2"
+                prid="IDc4eb1852-fb86-45ab-9889-d93ec58986e2">
+                <label>Document validation</label>
+                <desc>Document validation TestSuite</desc>
+            </TStructDesc>
+            <TStructDesc seq="4" ts="2016-09-22T15:15:34"
+                id="ID3748f867-448b-41bd-96e0-1bbfa1154402" lvl="3"
+                prid="ID12cb1449-ee1d-4787-b8f6-8a537759c0c5">
+                <label>Check for schema valid document</label>
+                <desc>Validate the document against the schema and check for validation errors</desc>
+            </TStructDesc>
+            <TStructDesc seq="5" ts="2016-09-22T15:15:35"
+                id="ID82283c7f-b547-46ae-b743-4d51cc86e70c" lvl="4"
+                prid="ID3748f867-448b-41bd-96e0-1bbfa1154402">
+                <label>Run schema validation</label>
+                <desc>Validate the document against the schema</desc>
+            </TStructDesc>
+            <TMesg seq="6" ts="2016-09-22T15:15:35" v="0">Using schema validator "Xerces xyz"</TMesg>
+            <TStructDesc seq="7" ts="2016-09-22T15:15:35"
+                id="ID78c63a24-1726-4934-b270-200475124591" lvl="5"
+                prid="ID82283c7f-b547-46ae-b743-4d51cc86e70c">
+                <label>Assert no validation errors occur</label>
+                <desc>Check schema validation results for errors</desc>
+            </TStructDesc>
+            <TMesg seq="8" ts="2016-09-22T15:15:37" v="1">Validating against schema "https://yxz"</TMesg>
+            <TStructUpdt seq="9" ts="2016-09-22T15:15:39" s="FAILED" ref="ID78c63a24-1726-4934-b270-200475124591">Failed with 999 errors</TStructUpdt>
+            <TMesg seq="10" ts="2016-09-22T15:15:41" v="3">Test ended with errors</TMesg>
+        </ProgressEventLog>
+    </Progress>
+</etf:Response>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Request: https://localhost/testobjecttypes/IDd204552c-1f57-4086-82ed-fb68d739437e?traverseReferences=testObjectType -->
+<etf:Response xmlns="http://www.interactive-instruments.de/etf/1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:etf="http://www.interactive-instruments.de/etf/1.0"
+    xsi:schemaLocation="http://www.interactive-instruments.de/etf/1.0 https://raw.githubusercontent.com/jonherrmann/etf-schema-prototype/master/src/main/resources/schema/service-response.xsd"
+    version="1.0">
+    <TestObjectType id="IDd204552c-1f57-4086-82ed-fb68d739437e">
+        <label>WFS SERVICE</label>
+        <subTypes>
+            <testObjectTypeRef xsi:type="IdReference" ref="ID91bbe224-588b-477f-824e-a5ba36b57557"/>
+        </subTypes>
+    </TestObjectType>
+    <ReferencedItems>
+        <TestObjectType id="ID91bbe224-588b-477f-824e-a5ba36b57557">
+            <parent xsi:type="IdReference" ref="IDd204552c-1f57-4086-82ed-fb68d739437e"/>
+            <label>INSPIRE SERVICE</label>
+        </TestObjectType>
+    </ReferencedItems>
+</etf:Response>

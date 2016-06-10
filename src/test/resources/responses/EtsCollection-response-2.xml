@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Request: https://localhost/ets?offset=2&amp;limit=2 -->
+<etf:Response xmlns="http://www.interactive-instruments.de/etf/1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:etf="http://www.interactive-instruments.de/etf/1.0"
+    xsi:schemaLocation="http://www.interactive-instruments.de/etf/1.0 https://raw.githubusercontent.com/jonherrmann/etf-schema-prototype/master/src/main/resources/schema/service-response.xsd"
+    version="1.0">
+    <Pagination position="2" returnedItems="2">
+        <previous href="https://localhost/ets?offset=0&amp;limit=2"/>
+        <current href="https://localhost/ets?offset=2&amp;limit=2"/>
+    </Pagination>
+    <ExecutableTestSuiteCollection>
+        <ExecutableTestSuite id="IDc4eb1852-fb86-45ab-9889-d93ec58986e2">
+            <label>Label for ETS 3 - Simple Validation</label>
+            <description>Description for ETS 3</description>
+            <itemHash>ZGVmYXVsdA==</itemHash>
+            <version>1.0.1</version>
+            <author>Ed Hocken</author>
+            <creationDate>2012-05-04T18:13:50.0</creationDate>
+            <lastEditor>Kevin Finnerty</lastEditor>
+            <lastUpdateDate>2014-05-04T18:11:51.0</lastUpdateDate>
+            <testDriverRef xsi:type="etf:ExternalReference"
+                href="https://localhost/components/a5b2b248-c246-4cac-a3e6-24acfa1b118b"
+                title="BSX"/>
+            <messageTemplate etf:urnBase="urn:wfs"/>
+            <supportedTestObjectTypes>
+                <testObjectTypeRef xsi:type="etf:ExternalReference"
+                    href="https://localhost/testobjecttypes/d204552c-1f57-4086-82ed-fb68d739437e"
+                    title="XML FILES"/>
+                <testObjectTypeRef xsi:type="etf:ExternalReference"
+                    href="https://localhost/testobjecttypes/1680a90a-a30d-441f-82ee-e6b24b266566"
+                    title="GML FILES"/>
+            </supportedTestObjectTypes>
+            <testModules>
+                <testModuleRef xsi:type="etf:ExternalReference"
+                    href="https://localhost/testmodules/c3dba3d0-2e58-11e6-bdf4-0800200c9a66"/>
+            </testModules>
+        </ExecutableTestSuite>
+        <ExecutableTestSuite id="ID3ac90c7d-05c2-4a55-9e30-f63371a5e261">
+            <label>Label for ETS 4 - Simple GML tests</label>
+            <description>Description for ETS 4</description>
+            <itemHash>ZGVmYXVsdA==</itemHash>
+            <version>1.0.0</version>
+            <author>Frank Drebin</author>
+            <creationDate>2007-05-04T19:13:51.0</creationDate>
+            <testDriverRef xsi:type="etf:ExternalReference"
+                href="https://localhost/component/a5b2b248-c246-4cac-a3e6-24acfa1b118b"
+                title="BSX"/>
+            <messageTemplate etf:urnBase="urn:datatests"/>
+            <supportedTestObjectTypes>
+                <testObjectTypeRef xsi:type="etf:ExternalReference"
+                    href="https://localhost/testobjecttypes/1680a90a-a30d-441f-82ee-e6b24b266566"
+                    title="GML FILES"/>
+            </supportedTestObjectTypes>
+            <dependencies>
+                <executableTestSuiteRef xsi:type="etf:ExternalReference"
+                    href="https://localhost/ets/c4eb1852-fb86-45ab-9889-d93ec58986e2"
+                    title="ETS 3"/>
+                <executableTestSuiteRef xsi:type="etf:ExternalReference"
+                    href="https://localhost/ets/385aa17c-fbe9-11e5-86aa-5e5517507c66"
+                    title="ETS 1"/>
+            </dependencies>
+            <testModules>
+                <testModuleRef xsi:type="etf:ExternalReference"
+                    href="https://localhost/testmodules/8eb12580-2e59-11e6-bdf4-0800200c9a66"/>
+            </testModules>
+        </ExecutableTestSuite>
+    </ExecutableTestSuiteCollection>
+</etf:Response>

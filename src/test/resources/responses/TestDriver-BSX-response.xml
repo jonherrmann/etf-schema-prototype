@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Request: https://service/components/IDa5b2b248-c246-4cac-a3e6-24acfa1b118b -->
+<etf:Response xmlns="http://www.interactive-instruments.de/etf/1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:etf="http://www.interactive-instruments.de/etf/1.0"
+    xsi:schemaLocation="http://www.interactive-instruments.de/etf/1.0 https://raw.githubusercontent.com/jonherrmann/etf-schema-prototype/master/src/main/resources/schema/service-response.xsd"
+    version="1.0">
+    <Component id="IDa5b2b248-c246-4cac-a3e6-24acfa1b118b">
+        <name>BSX</name>
+        <description>TestDriver for executing BaseX based Tests</description>
+        <vendor>interactive instruments GmbH</vendor>
+        <version>1.0.4</version>
+    </Component>
+</etf:Response>

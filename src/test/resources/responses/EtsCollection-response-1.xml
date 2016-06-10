@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Request: https://localhost/ets?offset=0&amp;limit=2 -->
+<etf:Response xmlns="http://www.interactive-instruments.de/etf/1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:etf="http://www.interactive-instruments.de/etf/1.0"
+    xsi:schemaLocation="http://www.interactive-instruments.de/etf/1.0 https://raw.githubusercontent.com/jonherrmann/etf-schema-prototype/master/src/main/resources/schema/service-response.xsd"
+    version="1.0">
+    <Pagination position="1" returnedItems="2">
+        <current href="https://localhost/ets?offset=0&amp;limit=2"/>
+        <next href="https://localhost/ets?offset=2&amp;limit=2"/>
+    </Pagination>
+    <ExecutableTestSuiteCollection>
+        <ExecutableTestSuite id="ID385aa17c-fbe9-11e5-86aa-5e5517507c66">
+            <label>Label for ETS 1 - WFS Tests</label>
+            <description>Description for ETS 1</description>
+            <itemHash>ZGVmYXVsdA==</itemHash>
+            <version>1.0.0</version>
+            <author>Jane Spencer</author>
+            <creationDate>2006-06-04T01:13:51.0</creationDate>
+            <testDriverRef xsi:type="etf:ExternalReference"
+                href="https://localhost/components/6db5530b-4740-4f86-9f23-583ea454ba72"
+                title="SUI"/>
+            <messageTemplate etf:urnBase="urn:wfs"/>
+            <supportedTestObjectTypes>
+                <testObjectTypeRef xsi:type="etf:ExternalReference"
+                    href="https://localhost/testobjecttypes/ee92a614-a45c-4bc5-8dc8-43f0579ab771"
+                    title="WFS SERVICE"/>
+                <testObjectTypeRef xsi:type="etf:ExternalReference"
+                    href="https://localhost/testobjecttypes/91bbe224-588b-477f-824e-a5ba36b57557"
+                    title="INSPIRE SERVICE"/>
+            </supportedTestObjectTypes>
+            <consumableResultObjects>
+                <testObjectTypeRef xsi:type="etf:ExternalReference"
+                    href="https://localhost/testobjecttypes/1680a90a-a30d-441f-82ee-e6b24b266566"
+                    title="GML FILES"/>
+            </consumableResultObjects>
+            <testModules>
+                <testModuleRef xsi:type="etf:ExternalReference"
+                    href="https://localhost/testmodules/e72aec0-2e59-11e6-bdf4-0800200c9a66"/>
+            </testModules>
+        </ExecutableTestSuite>
+        <ExecutableTestSuite id="ID36315cbd-fa68-427f-9744-219d33f34964">
+            <label>Label for ETS 2 - INSPIRE Tests</label>
+            <description>Description for ETS 2</description>
+            <itemHash>ZGVmYXVsdA==</itemHash>
+            <version>1.0.1</version>
+            <author>Ed Hocken</author>
+            <creationDate>2012-05-04T18:13:50.0</creationDate>
+            <lastEditor>Kevin Finnerty</lastEditor>
+            <lastUpdateDate>2014-05-04T18:11:51.0</lastUpdateDate>
+            <testDriverRef xsi:type="etf:ExternalReference"
+                href="https://localhost/components/6db5530b-4740-4f86-9f23-583ea454ba72"
+                title="SUI"/>
+            <messageTemplate etf:urnBase="urn:wfs"/>
+            <supportedTestObjectTypes>
+                <testObjectTypeRef xsi:type="etf:ExternalReference"
+                    href="https://localhost/testobjecttypes/91bbe224-588b-477f-824e-a5ba36b57557"
+                    title="INSPIRE SERVICE"/>
+            </supportedTestObjectTypes>
+            <testModules>
+                <testModuleRef xsi:type="etf:ExternalReference"
+                    href="https://localhost/testmodules/e72aec0-2e59-11e6-bdf4-0800200c9a66"/>
+            </testModules>
+        </ExecutableTestSuite>
+    </ExecutableTestSuiteCollection>
+</etf:Response>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Request: https://localhost/testtasks/406873fe-7e65-45e1-8822-e15056206d9c?traverseReferences=executableTestSuite,testObject  -->
+<etf:Response xmlns="http://www.interactive-instruments.de/etf/1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:etf="http://www.interactive-instruments.de/etf/1.0"
+    xsi:schemaLocation="http://www.interactive-instruments.de/etf/1.0 https://raw.githubusercontent.com/jonherrmann/etf-schema-prototype/master/src/main/resources/schema/service-response.xsd"
+    version="1.0">
+    <Pagination position="0" returnedItems="1">
+        <current href="https://localhost/testtasks/406873fe-7e65-45e1-8822-e15056206d9c?traverseReferences=executableTestSuite,testObject"/>
+    </Pagination>
+    <TestTaskCollection>
+        <TestTask id="ID406873fe-7e65-45e1-8822-e15056206d9c">
+            <Properties/>
+            <testTaskResult xsi:type="etf:ExternalReference"
+                href="https://localhost/testresults/8527ebf2-7c7f-4f44-9372-06713296d542"/>
+            <executableTestSuite xsi:type="etf:IdReference"
+                ref="IDc4eb1852-fb86-45ab-9889-d93ec58986e2"/>
+            <testObject xsi:type="etf:IdReference" ref="IDd54a6e8b-a87d-46f0-81a7-c9f49833b340"/>
+            <progress xsi:type="etf:ExternalReference"
+                href="https://localhost/progress/d7889838-cf5c-4f24-b286-1d7cea62af05"/>
+        </TestTask>
+    </TestTaskCollection>
+    <ReferencedItems>
+        <ExecutableTestSuite id="IDc4eb1852-fb86-45ab-9889-d93ec58986e2">
+            <label>Label for ETS 3 - Simple Validation</label>
+            <description>Description for ETS 3</description>
+            <itemHash>ZGVmYXVsdA==</itemHash>
+            <version>1.0.1</version>
+            <author>Ed Hocken</author>
+            <creationDate>2012-05-04T18:13:50.0</creationDate>
+            <lastEditor>Kevin Finnerty</lastEditor>
+            <lastUpdateDate>2014-05-04T18:11:51.0</lastUpdateDate>
+            <testDriverRef xsi:type="etf:ExternalReference"
+                href="https://localhost/components/a5b2b248-c246-4cac-a3e6-24acfa1b118b"
+                title="BSX"/>
+            <messageTemplate etf:urnBase="urn:wfs"/>
+            <supportedTestObjectTypes>
+                <testObjectTypeRef xsi:type="etf:ExternalReference"
+                    href="https://localhost/testobjecttypes/d204552c-1f57-4086-82ed-fb68d739437e"
+                    title="XML FILES"/>
+                <testObjectTypeRef xsi:type="etf:ExternalReference"
+                    href="https://localhost/testobjecttypes/1680a90a-a30d-441f-82ee-e6b24b266566"
+                    title="GML FILES"/>
+            </supportedTestObjectTypes>
+            <testModules>
+                <testModuleRef xsi:type="etf:ExternalReference"
+                    href="https://localhost/testmodules/c3dba3d0-2e58-11e6-bdf4-0800200c9a66"/>
+            </testModules>
+        </ExecutableTestSuite>
+        <TestObject id="IDd54a6e8b-a87d-46f0-81a7-c9f49833b340">
+            <label>Test Object 2 - XML tile</label>
+            <description>Description of Test Object 2</description>
+            <itemHash>ZGVmYXVsdA==</itemHash>
+            <version>1.0.1</version>
+            <author>Jane Spencer</author>
+            <creationDate>2006-06-04T01:13:51.0</creationDate>
+            <lastEditor>Kevin Finnerty</lastEditor>
+            <lastUpdateDate>2014-05-04T18:11:51.0</lastUpdateDate>
+            <testObjectTypes>
+                <testObjectType xsi:type="etf:ExternalReference"
+                    href="https://localhost/capabilities/testobjecttypes/d204552c-1f57-4086-82ed-fb68d739437e"
+                    title="XML FILES"/>
+            </testObjectTypes>
+            <ResourceCollection>
+                <resource href="file://tile_1223.xml"/>
+            </ResourceCollection>
+        </TestObject>
+    </ReferencedItems>
+</etf:Response>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Request: https://localhost/component/ID6db5530b-4740-4f86-9f23-583ea454ba72 -->
+<etf:Response xmlns="http://www.interactive-instruments.de/etf/1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:etf="http://www.interactive-instruments.de/etf/1.0"
+    xsi:schemaLocation="http://www.interactive-instruments.de/etf/1.0 https://raw.githubusercontent.com/jonherrmann/etf-schema-prototype/master/src/main/resources/schema/service-response.xsd"
+    version="1.0">
+    <Component id="ID6db5530b-4740-4f86-9f23-583ea454ba72">
+        <name>SUI</name>
+        <description>TestDriver for executing SoapUI based tests</description>
+        <vendor>interactive instruments GmbH</vendor>
+        <version>1.0.2</version>
+    </Component>
+</etf:Response>
