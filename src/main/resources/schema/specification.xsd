@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://www.interactive-instruments.de/etf/1.0"
+    targetNamespace="http://www.interactive-instruments.de/etf/1.0"
+    xmlns:etf="http://www.interactive-instruments.de/etf/1.0" elementFormDefault="qualified"
+    version="1.0">
+     
+    <xs:annotation>
+        <!-- Author: Jon Herrmann (interactive instruments) -->
+        <xs:documentation xml:lang="en"> specification.xsd, (c) 2016 interactive instruments, part of ETF,
+            licensed under the Apache License Version 2.0 </xs:documentation>
+    </xs:annotation>
+    
+    <!-- =============================================================== -->
+    <!-- ================== includes and imports ======================= -->
+    <!-- =============================================================== -->
+    <xs:include schemaLocation="basicTypes.xsd"/>
+    <xs:include schemaLocation="test.xsd"/>
+    <!-- =============================================================== -->
+    
+    <!-- ======================== elements ============================= -->
+    <xs:element name="ConformanceClass" type="ConformanceClassType" substitutionGroup="Item"/>
+    <!-- =============================================================== -->
+    
+    <!-- =============================================================== -->
+    <xs:complexType name="ConformanceClassType">
+        <xs:annotation>
+            <xs:documentation>Embedded or referenced Executable Test
+                Suites</xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:sequence>
+                <xs:element ref="ExecutableTestSuite"/>
+            </xs:sequence>
+            <xs:sequence>
+                <xs:element name="executableTestSuite" type="RefType"/>
+            </xs:sequence>
+        </xs:choice>
+    </xs:complexType>
+    
+</xs:schema>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.interactive-instruments.de/etf/1.0"
+    targetNamespace="http://www.interactive-instruments.de/etf/1.0" xmlns:etf="http://www.interactive-instruments.de/etf/1.0"
+    elementFormDefault="qualified" version="1.0">
+
+    <xs:annotation>
+        <!-- Author: Jon Herrmann (interactive instruments) -->
+        <xs:documentation xml:lang="en">report.xsd, (c) 2016 interactive instruments, part of ETF, licensed under the Apache
+            License Version 2.0 </xs:documentation>
+    </xs:annotation>
+
+    <!-- =============================================================== -->
+    <!-- ================== includes and imports ======================= -->
+    <!-- =============================================================== -->
+    <xs:include schemaLocation="basicTypes.xsd"/>
+    <!-- =============================================================== -->
+
+    <!-- ======================== elements ============================= -->
+    <xs:element name="ExecutableTestSuite" type="ExecutableTestSuiteType" substitutionGroup="Item"/>
+    <xs:element name="MessageTemplate" type="MessageTemplateType"/>
+    <xs:element name="TestModule" type="TestModulesType" substitutionGroup="Item"/>
+    <xs:element name="TestCase" type="TestCaseType" substitutionGroup="Item"/>
+    <xs:element name="TestStep" type="TestStepType" substitutionGroup="Item"/>
+    <xs:element name="TestAssertion" type="TestAssertionType" substitutionGroup="Item"/>
+    <!-- =============================================================== -->
+
+    <!-- =============================================================== -->
+    <xs:complexType name="ExecutableTestSuiteType">
+        <xs:complexContent>
+            <xs:extension base="RepositoryItemType">
+                <xs:sequence>
+                    <xs:element name="testDriverRef" type="RefType" minOccurs="1"/>
+                    <xs:element name="messageTemplate">
+                        <xs:complexType>
+                            <xs:attribute ref="urnBase" use="required"/>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="supportedTestObjectTypes">
+                        <xs:complexType>
+                            <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                                <xs:element name="testObjectTypeRef" type="RefType"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="dependencies" minOccurs="0">
+                        <xs:complexType>
+                            <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                                <xs:element name="executableTestSuiteRef" type="RefType"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="consumableResultObjects" minOccurs="0">
+                        <xs:complexType>
+                            <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                                <xs:element name="testObjectTypeRef" type="RefType"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="testModules">
+                        <xs:complexType>
+                            <xs:choice>
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <etf:embedXorRef>true</etf:embedXorRef>
+                                    </xs:appinfo>
+                                </xs:annotation>
+                                <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                                    <xs:element ref="TestModule"/>
+                                </xs:sequence>
+                                <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                                    <xs:element name="testModuleRef" type="RefType"/>
+                                </xs:sequence>
+                            </xs:choice>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:complexType name="MessageTemplateType">
+        <xs:sequence>
+            <xs:element name="template" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="urn" type="MessageTemplateUrnType"/>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:simpleType name="MessageTemplateUrnType">
+        <xs:annotation>
+            <xs:documentation> Error codes as urn. Must begin with "urn:" plus a at least 4 digit, max 8 digits long number,
+                example: urn:wfs:error:3001 </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:pattern value="(urn:)(\w+:)+\d{4,8}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- =============================================================== -->
+    <xs:complexType name="TestModulesType" final="extension restriction">
+        <xs:complexContent>
+            <xs:extension base="MetaDataItemType">
+                <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                    <xs:element name="testCaseRef" type="RefType"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:complexType name="TestCaseType" final="extension restriction">
+        <xs:complexContent>
+            <xs:extension base="MetaDataItemType">
+                <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                    <xs:element name="testSteps">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element ref="TestStep"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:complexType name="TestStepType" final="extension restriction">
+        <xs:complexContent>
+            <xs:extension base="MetaDataItemType">
+                <xs:sequence>
+                    <xs:element name="statementForExecution" type="xs:string"/>
+                    <xs:element name="typeRef" type="RefType">
+                        <xs:annotation>
+                            <xs:documentation>Test step type</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="testAssertions">
+                        <xs:complexType>
+                            <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                                <xs:element name="testAssertionRef" type="RefType"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:complexType name="TestAssertionType" final="extension restriction">
+        <xs:complexContent>
+            <xs:extension base="MetaDataItemType">
+                <xs:sequence>
+                    <xs:element name="expectedResult" type="xs:string"/>
+                    <xs:element name="expression" type="xs:string"/>
+                    <xs:element name="typeRef" type="RefType">
+                        <xs:annotation>
+                            <xs:documentation>Assertion type</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="messageTemplateRef">
+                        <xs:complexType>
+                            <xs:attribute name="urn" type="MessageTemplateUrnType"/>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+</xs:schema>

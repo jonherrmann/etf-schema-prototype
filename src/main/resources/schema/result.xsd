@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.interactive-instruments.de/etf/1.0"
+    targetNamespace="http://www.interactive-instruments.de/etf/1.0" xmlns:etf="http://www.interactive-instruments.de/etf/1.0"
+    elementFormDefault="qualified" version="1.0">
+
+    <xs:annotation>
+        <!-- Author: Jon Herrmann (interactive instruments) -->
+        <xs:documentation xml:lang="en">report.xsd, (c) 2016 interactive instruments, part of ETF, licensed under the Apache
+            License Version 2.0 </xs:documentation>
+    </xs:annotation>
+
+    <!-- =============================================================== -->
+    <!-- ================== includes and imports ======================= -->
+    <!-- =============================================================== -->
+    <xs:include schemaLocation="basicTypes.xsd"/>
+    <!-- =============================================================== -->
+
+    <!-- ======================== elements ============================= -->
+    <xs:element name="ExecutionEnvironment" type="ExecutionEnvironmentType" substitutionGroup="Item"/>
+    <xs:element name="TestTaskResult" type="TestTaskResultType" substitutionGroup="Item"/>
+    <xs:element name="TestTaskResultsCollection" type="TestTaskResultsCollectionType"/>
+    <xs:element name="Attachment" type="AttachmentType" substitutionGroup="Item"/>
+    <xs:element name="TestStepResult" type="TestStepResultType" substitutionGroup="Item"/>
+    <xs:element name="TestSuiteResult" type="TestSuiteResultType" substitutionGroup="Item"/>
+    <xs:element name="TestCaseResult" type="TestCaseResultType" substitutionGroup="Item"/>
+    <xs:element name="TestAssertionResult" type="TestAssertionResultType" substitutionGroup="Item"/>
+    <xs:element name="TestAssertionResultMessage" type="TestAssertionResultMessageType"/>
+    <xs:element name="MessageTranslationParameter" type="MessageTranslationParameterType"/>
+    <!-- =============================================================== -->
+
+
+    <!-- =============================================================== -->
+    <xs:complexType name="ResultModelItemType" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="ModelItemType">
+                <xs:sequence>
+                    <xs:element name="resultStatus" type="TestResultStatusType"/>
+                    <xs:element name="startTimestamp" type="xs:dateTime"/>
+                    <xs:element name="duration" type="xs:unsignedLong"/>
+                    <xs:element name="resultedFrom" type="RefType"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:complexType name="ExecutionEnvironmentType" final="extension restriction">
+        <xs:sequence>
+            <xs:element name="nodeName" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="IdType" use="required"/>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:complexType name="TestTaskResultsCollectionType" final="extension restriction">
+        <xs:sequence>
+            <xs:element name="resultStatus" type="TestResultStatusType"/>
+            <xs:element name="startTimestamp" type="xs:dateTime"/>
+            <xs:element name="duration" type="xs:unsignedLong"/>
+            <xs:element ref="TestTaskResult" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:complexType name="TestTaskResultType" final="extension restriction">
+        <xs:complexContent>
+            <xs:extension base="ResultModelItemType">
+                <xs:sequence>
+                    <xs:element name="attachments">
+                        <xs:complexType>
+                            <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                                <xs:element ref="Attachment"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="testSuiteResults">
+                        <xs:complexType>
+                            <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                                <xs:element ref="TestSuiteResult"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:complexType name="AttachmentType">
+        <xs:sequence>
+            <xs:element name="encoding" type="xs:string" default="UTF-8"/>
+            <xs:element name="mimeType" type="MimeType">
+                <xs:annotation>
+                    <xs:documentation> Internal type or mimeType </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:choice>
+                <xs:element name="referencedData">
+                    <xs:complexType>
+                        <xs:attribute name="href" type="ExternalUriType"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="embeddedData" type="xs:base64Binary"> </xs:element>
+            </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="id" type="IdType" use="required"/>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:complexType name="TestSuiteResultType" final="extension restriction">
+        <xs:complexContent>
+            <xs:extension base="ResultModelItemType">
+                <xs:sequence>
+                    <xs:element name="testCaseResults">
+                        <xs:complexType>
+                            <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                                <xs:element ref="TestCaseResult"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:complexType name="TestCaseResultType" final="extension restriction">
+        <xs:complexContent>
+            <xs:extension base="ResultModelItemType">
+                <xs:sequence>
+                    <xs:element name="testStepResults">
+                        <xs:complexType>
+                            <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                                <xs:element ref="TestStepResult"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:complexType name="TestStepResultType" final="extension restriction">
+        <xs:complexContent>
+            <xs:extension base="ResultModelItemType">
+                <xs:sequence>
+                    <xs:element name="attachment" type="RefType" minOccurs="0"/>
+                    <xs:element name="testAssertionResults">
+                        <xs:complexType>
+                            <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                                <xs:element ref="TestAssertionResult"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:complexType name="TestAssertionResultType" final="extension restriction">
+        <xs:complexContent>
+            <xs:extension base="ResultModelItemType">
+                <xs:sequence>
+                    <xs:element name="messages">
+                        <xs:complexType>
+                            <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                                <xs:element ref="TestAssertionResultMessage"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:complexType name="TestAssertionResultMessageType" final="extension restriction">
+        <xs:sequence>
+            <xs:element name="translation">
+                <xs:complexType>
+                    <xs:attribute name="urn" type="ErrorUrnType"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="messageTranslationParameters">
+                <xs:complexType>
+                    <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                        <xs:element ref="MessageTranslationParameter"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:simpleType name="ErrorUrnType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(urn:)(\w+:)+\d{4,8}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+    <!-- =============================================================== -->
+    <xs:complexType name="MessageTranslationParameterType">
+        <xs:annotation>
+            <xs:documentation>A key value pair which is used to translate with a message template (type MessageTemplateType) into
+                a specific language.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="value" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

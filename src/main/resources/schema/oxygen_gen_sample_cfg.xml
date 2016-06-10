@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+    <schemaSystemId>file:./run.xsd</schemaSystemId>
+    <documentRoot>TestRun</documentRoot>
+    <outputFolder>./</outputFolder>
+    <filenamePrefix>instance</filenamePrefix>
+    <filenameExtension>xml</filenameExtension>
+    <noOfInstances>2</noOfInstances>
+    <openFirstInstance>true</openFirstInstance>
+    <defaultNamespace>http://www.interactive-instruments.de/etf/1.0</defaultNamespace>
+    <valuesMaxLength>10</valuesMaxLength>
+    <isUseIncrementalNamesForValues>true</isUseIncrementalNamesForValues>
+    <discardOptionalElementsAfterNestedLevel>6</discardOptionalElementsAfterNestedLevel>
+    <namespaceMapping ns="http://www.interactive-instruments.de/etf/1.0" proxy="etf"/>
+    <element namespace="&lt;ANY>" name="&lt;ANY>">
+        <generateOptionalElements>true</generateOptionalElements>
+        <generateOptionalAttributes>true</generateOptionalAttributes>
+        <valuesForContentType>RANDOM</valuesForContentType>
+        <preferredNumberOfRepetitions>2</preferredNumberOfRepetitions>
+        <maximumRecursivityLevel>2</maximumRecursivityLevel>
+        <alternativeStrategy>RANDOM</alternativeStrategy>
+        <choicesAndSubstitutions strategy="RANDOM" generateOthersAsComments="false"/>
+        <attribute namespace="&lt;ANY>" name="&lt;ANY>">
+        </attribute>
+    </element>
+</settings>

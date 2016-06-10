@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://www.interactive-instruments.de/etf/1.0"
+    targetNamespace="http://www.interactive-instruments.de/etf/1.0"
+    xmlns:etf="http://www.interactive-instruments.de/etf/1.0" elementFormDefault="qualified"
+    version="1.0">
+
+    <xs:annotation>
+        <!-- Author: Jon Herrmann (interactive instruments) -->
+        <xs:documentation xml:lang="en"> capabilities.xsd, (c) 2016 interactive instruments, part of
+            ETF, licensed under the Apache License Version 2.0 </xs:documentation>
+    </xs:annotation>
+
+    <!-- =============================================================== -->
+    <!-- ================== includes and imports ======================= -->
+    <!-- =============================================================== -->
+    <xs:include schemaLocation="basicTypes.xsd"/>
+    <xs:include schemaLocation="test.xsd"/>
+    <xs:include schemaLocation="run.xsd"/>
+    <xs:include schemaLocation="specification.xsd"/>
+    <!-- =============================================================== -->
+
+    <!-- ======================== elements ============================= -->
+    <xs:element name="TestObjectType" type="TestObjectTypeType" substitutionGroup="Item"/>
+    <xs:element name="TestObject" type="TestObjectType" substitutionGroup="Item"/>
+    <xs:element name="ResourceCollection" type="ResourceCollectionType"/>
+    <xs:element name="ResultStyle" type="ResultStyleType" substitutionGroup="Item"/>
+    <xs:element name="TestDomain" type="TestDomainType" substitutionGroup="Item"/>
+    <xs:element name="Credential" type="CredentialType" substitutionGroup="Item"/>
+    <xs:element name="Component" type="ComponentType" substitutionGroup="Item"/>
+    <!-- =============================================================== -->
+
+    <!-- =============================================================== -->
+    <xs:complexType name="TestObjectTypeType">
+        <xs:complexContent>
+            <xs:extension base="MetaDataItemType">
+                <xs:sequence>
+                    <xs:element name="subTypes" minOccurs="0">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="testObjectTypeRef" type="RefType" minOccurs="1"
+                                    maxOccurs="unbounded"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:complexType name="TestObjectType">
+        <xs:complexContent>
+            <xs:extension base="RepositoryItemType">
+                <xs:sequence>
+                    <xs:element name="testObjectTypes">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="testObjectType" type="RefType" minOccurs="1"
+                                    maxOccurs="unbounded"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element ref="ResourceCollection"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:complexType name="ResourceCollectionType" final="extension restriction">
+        <xs:annotation>
+            <xs:documentation> Collection of resources used by an ETS during a test run
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:choice/>
+            <xs:element name="resource" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:attribute name="href" type="xs:anyURI" use="required"/>
+                    <xs:attribute name="name" type="xs:normalizedString" use="optional">
+                        <xs:annotation>
+                            <xs:documentation>An optional name for the resource which can be used to
+                                distinguish multiple resources</xs:documentation>
+                        </xs:annotation>
+                    </xs:attribute>
+                    <xs:attribute name="cred" type="ExternalUriType"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:complexType name="ResultStyleType">
+        <xs:annotation>
+            <xs:documentation> Meta information of a result style used to transform/style a test
+                result </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="RepositoryItemType">
+                <xs:sequence>
+                    <xs:element name="priority" type="xs:int"/>
+                    <xs:element name="resource">
+                        <xs:complexType>
+                            <xs:attribute name="href" type="xs:anyURI"/>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:complexType name="TestDomainType">
+        <xs:annotation>
+            <xs:documentation>A test domain represents a collection of model items (Conformance
+                Classes, Credentials Test Objects and Test Runs) that are created and used for a
+                specific testing purpose. It may be used to filter model items for different
+                domain users. </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="RepositoryItemType">
+                <xs:sequence>
+
+                    <xs:element name="conformanceClasses">
+                        <xs:complexType>
+                            <xs:annotation>
+                                <xs:documentation>Embedded or referenced Conformance
+                                    Classes</xs:documentation>
+                                <xs:appinfo>
+                                    <etf:embedXorRef>true</etf:embedXorRef>
+                                </xs:appinfo>
+                            </xs:annotation>
+                            <xs:choice>
+                                <xs:sequence>
+                                    <xs:element ref="ConformanceClass"/>
+                                </xs:sequence>
+                                <xs:sequence>
+                                    <xs:element name="conformanceClassRef" type="RefType"/>
+                                </xs:sequence>
+                            </xs:choice>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="credentials" minOccurs="0">
+                        <xs:complexType>
+                            <xs:annotation>
+                                <xs:documentation>Embedded or referenced
+                                    Credentials</xs:documentation>
+                                <xs:appinfo>
+                                    <etf:embedXorRef>true</etf:embedXorRef>
+                                </xs:appinfo>
+                            </xs:annotation>
+                            <xs:choice>
+                                <xs:sequence>
+                                    <xs:element ref="Credential"/>
+                                </xs:sequence>
+                                <xs:sequence>
+                                    <xs:element name="credentialRef" type="RefType"/>
+                                </xs:sequence>
+                            </xs:choice>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="testObjects">
+                        <xs:complexType>
+                            <xs:annotation>
+                                <xs:documentation>Embedded or referenced Test
+                                    Objects</xs:documentation>
+                                <xs:appinfo>
+                                    <etf:embedXorRef>true</etf:embedXorRef>
+                                </xs:appinfo>
+                            </xs:annotation>
+                            <xs:choice>
+                                <xs:sequence>
+                                    <xs:element ref="TestObject"/>
+                                </xs:sequence>
+                                <xs:sequence>
+                                    <xs:element name="testObjectRef" type="RefType"/>
+                                </xs:sequence>
+                            </xs:choice>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="testRuns">
+                        <xs:complexType>
+                            <xs:annotation>
+                                <xs:documentation>Embedded or referenced Test Run</xs:documentation>
+                                <xs:appinfo>
+                                    <etf:embedXorRef>true</etf:embedXorRef>
+                                </xs:appinfo>
+                            </xs:annotation>
+                            <xs:choice>
+                                <xs:sequence>
+                                    <xs:element ref="TestRun"/>
+                                </xs:sequence>
+                                <xs:sequence>
+                                    <xs:element name="testRunRef" type="RefType"/>
+                                </xs:sequence>
+                            </xs:choice>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="access" use="required">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="public"/>
+                            <xs:enumeration value="restricted"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:complexType name="CredentialType">
+        <xs:complexContent>
+            <xs:extension base="MetaDataItemType">
+                <xs:sequence>
+                    <xs:element name="applicableTestObjectTypeRef" type="RefType"/>
+                    <xs:element name="applicableUri" type="xs:anyURI"/>
+                    <xs:any namespace="##other" processContents="skip" minOccurs="0"
+                        maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:complexType name="ComponentType">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="description" type="xs:string"/>
+            <xs:element name="vendor" type="xs:string"/>
+            <xs:element name="version" type="VersionType"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="IdType" use="required"/>
+    </xs:complexType>
+
+</xs:schema>

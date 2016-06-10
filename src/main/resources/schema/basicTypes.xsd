@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://www.interactive-instruments.de/etf/1.0"
+    targetNamespace="http://www.interactive-instruments.de/etf/1.0"
+    xmlns:etf="http://www.interactive-instruments.de/etf/1.0" elementFormDefault="qualified"
+    version="1.0">
+
+    <xs:annotation>
+        <!-- Author: Jon Herrmann (interactive instruments) -->
+        <xs:documentation xml:lang="en"> basicTypes.xsd, (c) 2016 interactive instruments, part of
+            ETF, licensed under the Apache License Version 2.0.</xs:documentation>
+    </xs:annotation>
+
+    <!-- =============================================================== -->
+    <!-- ================== includes and imports ======================= -->
+    <!-- =============================================================== -->
+    <!-- none -->
+    <!-- =============================================================== -->
+
+    <!-- =============================================================== -->
+    <xs:attribute name="urnBase">
+        <xs:simpleType>
+            <xs:annotation>
+                <xs:documentation> Urn beginning with "urn:" plus at least the namespace
+                </xs:documentation>
+            </xs:annotation>
+            <xs:restriction base="xs:token">
+                <xs:pattern value="(urn:)(\w+)"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:attribute>
+
+    <!-- ======================== elements ============================= -->
+    <xs:element name="Properties" type="PropertiesType"/>
+    <xs:element name="Item" abstract="true">
+        <xs:annotation>
+            <xs:documentation>One atomar model item</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="Collection" abstract="true">
+        <xs:annotation>
+            <xs:documentation>A collection of model items</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <!-- =============================================================== -->
+
+
+    <!-- =============================================================== -->
+    <xs:simpleType name="httpUriType">
+        <xs:annotation>
+            <xs:documentation> HTTP or HTTPS URLs </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:anyURI">
+            <xs:pattern value="https?://.+"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- =============================================================== -->
+    <xs:simpleType name="IdType">
+        <xs:annotation>
+            <xs:documentation> ID, at least 6 characters, max 45</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:ID">
+            <xs:minLength value="6"/>
+            <xs:maxLength value="45"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- =============================================================== -->
+    <xs:simpleType name="SimpleIdRefType">
+        <xs:annotation>
+            <xs:documentation> REFERENCE, at least 6 characters, max 45</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:IDREF">
+            <xs:minLength value="6"/>
+            <xs:maxLength value="45"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- =============================================================== -->
+    <xs:simpleType name="ExternalUriType">
+        <xs:annotation>
+            <xs:documentation>URI to an external resource. The client is responsible to handle the
+                schema type.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:anyURI">
+            <xs:pattern value="(https?|urn|git|svn|ssh|sftp|ftp)(://).+"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- =============================================================== -->
+    <xs:complexType name="RefType" abstract="true">
+        <xs:annotation>
+            <xs:documentation> Abstract Reference Type</xs:documentation>
+        </xs:annotation>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:complexType name="IdReference">
+        <xs:complexContent>
+            <xs:annotation>
+                <xs:documentation> ID Reference within the document</xs:documentation>
+            </xs:annotation>
+            <xs:extension base="RefType">
+                <xs:attribute name="ref" type="SimpleIdRefType" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:complexType name="ExternalReference">
+        <xs:complexContent>
+            <xs:annotation>
+                <xs:documentation> Reference to an external type</xs:documentation>
+            </xs:annotation>
+            <xs:extension base="RefType">
+                <xs:attribute name="href" type="ExternalUriType" use="required"/>
+                <xs:attribute name="title" type="xs:string" use="optional">
+                    <xs:annotation>
+                        <xs:documentation> Optional description </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:simpleType name="VersionType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="([0-9]+\.[0-9]+\.[0-9]+)"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- =============================================================== -->
+    <xs:simpleType name="MimeType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(application|image|text|multipart|model)/.+(;\s*.+=.+)*"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- =============================================================== -->
+    <xs:complexType name="ModelItemType" abstract="true">
+        <xs:sequence>
+            <xs:element name="parent" type="RefType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation> Optional reference to parent model item</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="id" type="IdType" use="required"/>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:complexType name="MetaDataItemType" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="ModelItemType">
+                <xs:sequence>
+                    <xs:element name="label" minOccurs="1">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:minLength value="1"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="description" nillable="false" type="xs:string" minOccurs="0"/>
+                    <xs:element name="reference" nillable="false" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:complexType name="RepositoryItemType" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="MetaDataItemType">
+                <xs:sequence>
+                    <xs:element name="itemHash" type="xs:base64Binary" minOccurs="1"/>
+                    <xs:element name="version" type="etf:VersionType" minOccurs="1"/>
+                    <xs:element name="author" type="xs:string" minOccurs="1"/>
+                    <xs:element name="creationDate" type="xs:dateTime" minOccurs="1"/>
+                    <xs:element name="lastEditor" type="xs:string" minOccurs="0"/>
+                    <xs:element name="lastUpdateDate" type="xs:dateTime" minOccurs="0"/>
+                </xs:sequence>
+                <xs:attribute name="replacedBy" type="ExternalUriType" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:simpleType name="VerbosityType">
+        <xs:restriction base="xs:nonNegativeInteger">
+            <xs:enumeration value="0">
+                <xs:annotation>
+                    <xs:documentation>DEBUG</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+                <xs:annotation>
+                    <xs:documentation>INFO</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+                <xs:annotation>
+                    <xs:documentation>WARN</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+                <xs:annotation>
+                    <xs:documentation>ERROR</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+                <xs:annotation>
+                    <xs:documentation>FATAL</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- =============================================================== -->
+    <xs:complexType name="PropertiesType">
+        <xs:sequence>
+            <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="value" type="xs:string"/>
+                    </xs:sequence>
+                    <xs:attribute name="name" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:simpleType name="TestResultStatusType">
+        <xs:restriction base="xs:string">
+            <xs:annotation>
+                <xs:documentation>The derived resultStatus is an aggregated result from all
+                    contained TestAssertionResult objects. It is determined by the following rules,
+                    where the first rule that is met applies:</xs:documentation>
+            </xs:annotation>
+            <xs:enumeration value="PASSED">
+                <xs:annotation>
+                    <xs:documentation>PASSED, if all status values are PASSED</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="FAILED">
+                <xs:annotation>
+                    <xs:documentation>FAILED, if at least one status value is FAILED
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SKIPPED">
+                <xs:annotation>
+                    <xs:documentation>SKIPPED, if at least one status value is SKIPPED because a
+                        test case depends on another test case which has the status FAILED
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NOT_APPLICABLE">
+                <xs:annotation>
+                    <xs:documentation>NOT_APPLICABLE if at least one status value is NOT_APPLICABLE,
+                        in the case the test object does not provide the capabilities for executing
+                        the test </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="INFO">
+                <xs:annotation>
+                    <xs:documentation>INFO, if at least one status value is INFO</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="WARNING">
+                <xs:annotation>
+                    <xs:documentation>WARNING, if at least one status value is
+                        WARNING</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UNDEFINED">
+                <xs:annotation>
+                    <xs:documentation>UNDEFINED, in all other cases</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PASSED_MANUAL">
+                <xs:annotation>
+                    <xs:documentation>PASSED_MANUAL, if at least one status value is PASSED_MANUAL
+                        (if the test is not automated and the user has to validate results manually
+                        based on instructions in the report) and all others are values are
+                        PASSED</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

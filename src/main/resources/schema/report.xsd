@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://www.interactive-instruments.de/etf/1.0"
+    targetNamespace="http://www.interactive-instruments.de/etf/1.0"
+    xmlns:etf="http://www.interactive-instruments.de/etf/1.0" elementFormDefault="qualified"
+    version="1.0"
+    xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning">
+
+    <xs:annotation>
+        <!-- Author: Jon Herrmann (interactive instruments) -->
+        <xs:documentation xml:lang="en">report.xsd, (c) 2016 interactive instruments, part of ETF,
+            licensed under the Apache License Version 2.0 </xs:documentation>
+    </xs:annotation>
+
+    <!-- =============================================================== -->
+    <!-- ================== includes and imports ======================= -->
+    <!-- =============================================================== -->
+    <xs:include schemaLocation="basicTypes.xsd"/>
+    <!-- =============================================================== -->
+
+    <!-- ======================== elements ============================= -->
+    <xs:element name="StatisticalReportTableType" type="StatisticalReportTableTypeType"
+        substitutionGroup="Item"/>
+    <xs:element name="StatisticalReportTable" type="StatisticalReportTableType"
+        substitutionGroup="Item"/>
+    <!-- =============================================================== -->
+
+    <!-- =============================================================== -->
+    <xs:complexType name="StatisticalReportTableTypeType">
+        <xs:complexContent>
+            <xs:extension base="RepositoryItemType">
+                <xs:sequence>
+                    <xs:element name="description" type="xs:string"/>
+                    <xs:element name="columnHeaderLabels" minOccurs="1" maxOccurs="1">
+                        <xs:complexType>
+                            <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                                <xs:element name="label" type="xs:string"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="columnExpressions" minOccurs="1" maxOccurs="1">
+                        <xs:complexType>
+                            <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                                <xs:element name="expression" type="xs:string"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:complexType name="StatisticalReportTableType">
+        <xs:sequence>
+            <xs:element name="type" type="RefType"/>
+            <xs:element name="entries" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                    <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                        <xs:element name="entry" type="ValueListType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="id" type="etf:IdType" use="required"/>
+    </xs:complexType>
+
+    <!-- =============================================================== -->
+    <xs:simpleType name="ValueListType">
+        <xs:list itemType="xs:string"/>
+    </xs:simpleType>
+
+
+</xs:schema>
